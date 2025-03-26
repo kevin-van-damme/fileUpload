@@ -3,6 +3,7 @@ import cors from "cors";
 import express, { NextFunction, Request, Response } from "express";
 import chalk from "chalk";
 import { PORT } from "./utils/envs";
+import multer from "multer";
 
 // Variables
 const app = express();
@@ -11,6 +12,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.static("src/public"));
+app.use("/uploads", express.static("uploads"));
+
+const upload = multer({ dest: "uploads/" });
 
 // Routes
 app.get("/", (req, res) => {
@@ -24,7 +28,5 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 // Server Listening
 app.listen(PORT, () => {
-  console.log(
-    chalk.bgBlue.bold(` 🚀 Server is up and running on port ${PORT}! 🚀 `)
-  );
+  console.log(chalk.bgBlue.bold(` 🚀 Server is up and running on port ${PORT}! 🚀 `));
 });
